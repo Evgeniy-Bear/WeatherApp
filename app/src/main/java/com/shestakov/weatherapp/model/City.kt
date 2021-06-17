@@ -1,4 +1,7 @@
 package com.shestakov.weatherapp.model
 
-class City {
-}
+data class City(
+    val cityName: String,
+    val lat: Double,
+    val lon: Double
+)
