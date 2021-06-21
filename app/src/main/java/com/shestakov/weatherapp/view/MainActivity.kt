@@ -3,6 +3,7 @@ package com.shestakov.weatherapp.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.shestakov.weatherapp.R
+import com.shestakov.weatherapp.view.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
