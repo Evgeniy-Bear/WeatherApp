@@ -8,8 +8,8 @@ import com.shestakov.weatherapp.model.RepositoryImpl
 import java.lang.Thread.sleep
 
 class MainViewModel(
-        private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-        private val repositoryImpl: Repository = RepositoryImpl()
+    private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
+    private val repositoryImpl: Repository = RepositoryImpl()
 ) : ViewModel() {
 
     fun getLiveData(): LiveData<AppState> = liveDataToObserve
@@ -25,10 +25,10 @@ class MainViewModel(
         Thread {
             sleep(1000)
             liveDataToObserve.postValue(
-                    AppState.Success(
-                            if (isRussian) repositoryImpl.getWeatherFromLocalStorageRus()
-                            else repositoryImpl.getWeatherFromLocalStorageWorld()
-                    )
+                AppState.Success(
+                    if (isRussian) repositoryImpl.getWeatherFromLocalStorageRus()
+                    else repositoryImpl.getWeatherFromLocalStorageWorld()
+                )
             )
         }.start()
     }

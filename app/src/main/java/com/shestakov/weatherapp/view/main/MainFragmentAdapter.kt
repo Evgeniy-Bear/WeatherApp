@@ -9,7 +9,7 @@ import com.shestakov.weatherapp.R
 import com.shestakov.weatherapp.model.Weather
 
 class MainFragmentAdapter(private var onItemViewClickListener: MainFragment.OnItemViewClickListener?) :
-        RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
+    RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
 
     private var weatherData: List<Weather> = listOf()
 
@@ -24,8 +24,8 @@ class MainFragmentAdapter(private var onItemViewClickListener: MainFragment.OnIt
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         return MainViewHolder(
-                LayoutInflater.from(parent.context)
-                        .inflate(R.layout.fragment_main_recycler_item, parent, false) as View
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.fragment_main_recycler_item, parent, false) as View
         )
     }
 
@@ -40,10 +40,12 @@ class MainFragmentAdapter(private var onItemViewClickListener: MainFragment.OnIt
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(weather: Weather) {
-            itemView.findViewById<TextView>(R.id.mainFragmentRecyclerItemTextView).text =
+            itemView.apply {
+                findViewById<TextView>(R.id.mainFragmentRecyclerItemTextView).text =
                     weather.city.cityName
-            itemView.setOnClickListener {
-                onItemViewClickListener?.onItemViewClick(weather)
+                setOnClickListener {
+                    onItemViewClickListener?.onItemViewClick(weather)
+                }
             }
         }
     }
