@@ -3,8 +3,8 @@ package com.shestakov.weatherapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.shestakov.weatherapp.model.Repository
-import com.shestakov.weatherapp.model.RepositoryImpl
+import com.shestakov.weatherapp.repository.Repository
+import com.shestakov.weatherapp.repository.RepositoryImpl
 import java.lang.Thread.sleep
 
 class MainViewModel(
