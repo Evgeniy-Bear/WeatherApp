@@ -10,6 +10,7 @@ import com.shestakov.weatherapp.R
 import com.shestakov.weatherapp.view.contacts.ContentProviderFragment
 import com.shestakov.weatherapp.view.history.HistoryFragment
 import com.shestakov.weatherapp.view.main.MainFragment
+import com.shestakov.weatherapp.view.maps.GoogleMapsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +52,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
+            R.id.menu_google_maps -> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .add(R.id.container, GoogleMapsFragment())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
+            }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
