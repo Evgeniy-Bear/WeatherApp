@@ -17,6 +17,7 @@ import com.shestakov.weatherapp.utils.showSnackBar
 import com.shestakov.weatherapp.viewmodel.AppState
 import com.shestakov.weatherapp.viewmodel.DetailsViewModel
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
+import com.shestakov.weatherapp.model.City
 import com.squareup.picasso.Picasso
 
 class DetailsFragment : Fragment() {
@@ -50,16 +51,16 @@ class DetailsFragment : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 binding.mainView.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
                 setWeather(appState.weatherData[0])
             }
             is AppState.Loading -> {
                 binding.mainView.visibility = View.GONE
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
             }
             is AppState.Error -> {
                 binding.mainView.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
                 binding.mainView.showSnackBar(
                     getString(R.string.error),
                     getString(R.string.reload),
@@ -76,6 +77,7 @@ class DetailsFragment : Fragment() {
     private fun setWeather(weather: Weather) {
         with(binding) {
             val city = weatherBundle.city
+            saveCity(city, weather)
             cityName.text = city.cityName
             cityCoordinates.text = String.format(
                 getString(R.string.city_coordinates),
@@ -102,9 +104,19 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    private fun saveCity(city: City, weather: Weather) {
+        viewModel.saveCityToDB(
+            Weather(
+                city,
+                weather.temperature,
+                weather.feelsLike,
+                weather.condition
+            )
+        )
+    }
+
     private fun getHeaderPicture(cityName: String) {
         when (cityName) {
-//
             "Москва" -> chosenHeaderPicture =
                 "https://www.m24.ru/b/d/nBkSUhL2hFEnmsqyIr6BosSyyJ2gp8T" +
                         "rlnTclb7P73OHezeOWXiSxTZt4slI-BHBsdWR_G-JLsV0=zc8_-mxcKqLEk-c_ELPdrQ.jpg"
