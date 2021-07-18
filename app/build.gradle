@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
-
 }
 
 apply plugin: 'kotlin-android'
@@ -26,6 +25,15 @@ android {
         viewBinding true
     }
 
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
@@ -38,6 +46,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            versionNameSuffix ".debug"
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,13 +58,26 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    flavorDimensions 'version'
+    productFlavors {
+        freeConfig {
+            dimension 'version'
+            versionNameSuffix '.free'
+        }
+        paid {
+            dimension 'version'
+            versionNameSuffix '.paid'
+        }
+    }
 }
+
 
 dependencies {
     //GoogleMaps Services
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     //Room
     implementation 'androidx.room:room-runtime:2.2.6'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
     kapt 'androidx.room:room-compiler:2.2.6'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
